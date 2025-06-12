@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Dia dos Namorados 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 0 20px;
+      top: 10vh;
+    }
+    h1 {
+      font-size: 2.5em;
+      animation: fadeIn 2s ease;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    .heart {
+      width: 80px;
+      height: 70px;
+      background: red;
+      position: relative;
+      margin: 30px auto;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 80px;
+      height: 70px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .heart::before {
+      top: -40px;
+      left: 0;
+    }
+    .heart::after {
+      left: 40px;
+      top: 0;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1) rotate(-45deg); }
+      50% { transform: scale(1.1) rotate(-45deg); }
+      100% { transform: scale(1) rotate(-45deg); }
+    }
+    button {
+      margin-top: 25px;
+      padding: 12px 30px;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      background-color: #ffffff;
+      color: #e91e63;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #e91e63;
+      color: white;
+      transform: scale(1.05);
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: #fff;
+      color: #e91e63;
+      padding: 20px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 450px;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.5s ease;
+      text-align: center;
+      line-height: 1.6;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+    .popup.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .popup h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .popup .decor {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    .popup button {
+      margin-top: 15px;
+      background-color: #e91e63;
+      color: white;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+      .heart {
+        width: 60px;
+        height: 55px;
+      }
+      .heart::before, .heart::after {
+        width: 60px;
+        height: 55px;
+      }
+      button {
+        padding: 10px 25px;
+        font-size: 0.95em;
+      }
+      .popup h2 {
+        font-size: 1.3em;
+      }
+      .popup {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="hearts"></canvas>
+
+  <div class="container">
+    <h1>Feliz Dia dos Namorados 💘</h1>
+    <div class="heart"></div>
+    <button onclick="showPopup()">Clique para ver a cartinha</button>
+  </div>
+
+  <div class="popup" id="popup">
+    <h2>🌟 Cartinha do Lobinho 🌟</h2>
+    <div class="decor">💖💫🌸✨🌷</div>
+    <p>
+      Thaeme meu amor, 💖<br><br>
+      Neste Dia dos Namorados, comemoramos o nosso segundo juntos, e eu quero que você saiba o quanto é especial para mim. 💘<br><br>
+      O seu rostinho lindo, mas também sapeca, e o seu abraço quentinho — ainda mais debaixo das cobertas — são tudo pra mim. 🤗<br><br>
+      A cada olhar, a cada carinho, a cada risada... eu me apaixono por você mais uma vez. ❤️<br><br>
+      Obrigado(a) por estar comigo. Com você, me sinto um garoto sortudo por ter uma garota como você na minha vida. Que o nosso amor continue crescendo, florescendo, e nos guiando por caminhos lindos, sempre juntos. 🌹<br><br>
+      Eu te amo minha Coelhinha🐰. Feliz Dia dos Namorados! 💘
+    </p>
+    <div class="decor">💕🌟💘🕊️🌼</div>
+    <button onclick="closePopup()">Fechar</button>
+  </div>
+
+<script>
+  function showPopup() {
+    document.getElementById("popup").classList.add("show");
+  }
+
+  function closePopup() {
+    document.getElementById("popup").classList.remove("show");
+  }
+
+  // Corações
+  const canvas = document.getElementById("hearts");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  class Heart {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 100;
+      this.size = Math.random() * 20 + 10;
+      this.speed = Math.random() * 1.5 + 0.5;
+      this.opacity = Math.random() * 0.5 + 0.3;
+    }
+    draw() {
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = "red";
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
+      ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    update() {
+      this.y -= this.speed;
+      if (this.y < -this.size) this.reset();
+    }
+  }
+
+  const hearts = [];
+  for (let i = 0; i < 80; i++) {
+    hearts.push(new Heart());
+  }
+
+  // Imagens flutuantes
+  const floatingImagesSrc = [
+    'imagem1.png',
+    'imagem2.png',
+    'imagem3.png',
+    'imagem4.png',
+    'imagem5.png',
+    'imagem6.png',
+    'imagem7.png',
+    'imagem8.png',
+    'imagem9.png',
+    'imagem10.png'
+  ];
+
+  const loadedImages = [];
+  let imagesLoaded = 0;
+
+  floatingImagesSrc.forEach(src => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      imagesLoaded++;
+      if (imagesLoaded === floatingImagesSrc.length) {
+        startFloatingImages();
+      }
+    };
+    loadedImages.push(img);
+  });
+
+  class FloatingImage {
+    constructor(image) {
+      this.image = image;
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 200;
+      this.size = Math.random() * 60 + 50; // Agora varia de 50px a 110px
+      this.speed = Math.random() * 1 + 0.5;
+      this.opacity = Math.random() * 0.5 + 0.5;
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+
+      // Sombra suave
+      ctx.shadowColor = "rgba(0,0,0,0.2)";
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 4;
+
+      // Máscara circular
+      ctx.beginPath();
+      ctx.arc(this.x + this.size / 2, this.y + this.size / 2, this.size / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+
+      ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
+
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+    update() {
+      this.y -= this.speed;
+      if (this.y < -this.size) this.reset();
+    }
+  }
+
+  const floatingImages = [];
+
+  function startFloatingImages() {
+    for (let i = 0; i < 25; i++) {
+      const img = loadedImages[Math.floor(Math.random() * loadedImages.length)];
+      floatingImages.push(new FloatingImage(img));
+    }
+  }
+
+  function animateHearts() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    hearts.forEach(heart => {
+      heart.update();
+      heart.draw();
+    });
+
+    floatingImages.forEach(img => {
+      img.update();
+      img.draw();
+    });
+
+    requestAnimationFrame(animateHearts);
+  }
+
+  animateHearts();
+</script>
+</body>
+</html>
